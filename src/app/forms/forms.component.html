@@ -1,0 +1,24 @@
+<div [formGroup]="myForm">
+    <div>
+        <label for="login">Login</label>
+        <input type="text" formControlName="login">
+        @if (!myForm.controls.login.valid && myForm.controls.login.touched) {
+            <small style="color: red;">Это поле обязательно для заполнения</small>
+        }
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <input type="email" formControlName="email">
+        @if (!myForm.controls.email.valid && myForm.controls.email.touched) {
+            <small style="color: red;">Это поле обязательно для заполнения</small>
+        }
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" formControlName="password">
+        @if (!myForm.controls.password.valid && myForm.controls.password.touched) {
+            <small style="color: red;">Это поле обязательно для заполнения</small>
+        }
+    </div>
+    <button (click)="handlerValue()" [disabled]="!myForm.valid">Send form</button>
+</div>

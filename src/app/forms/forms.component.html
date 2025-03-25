@@ -22,3 +22,26 @@
     </div>
     <button (click)="handlerValue()" [disabled]="!myForm.valid">Send form</button>
 </div>
+
+
+<div [formGroup]="validatorsForm">
+    <h2>Customs Validators</h2>
+    <div>
+        <label for="mail">Mail</label>
+        <input type="text" formControlName="mail">
+        @if (!validatorsForm.controls.mail.valid && validatorsForm.controls.mail.touched) {
+            <small style="color: red;">Неправильно введены данные</small>
+        }
+    </div>
+    <div>
+        <label for="password_one">Введите пароль</label>
+        <input type="password" formControlName="password_one">
+    </div>
+    <div>
+        <label for="password_two">Введите пароль еще раз</label>
+        <input type="password" formControlName="password_two">
+    </div>
+    @if (validatorsForm.errors?.['PasswordDoNotMatch']) {
+        <span style="color: red">Пароли не совпадают</span>
+    }
+</div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 export function checkRegExp(regExp: RegExp): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -22,6 +22,12 @@ export const conformPassword: ValidatorFn = (control: AbstractControl): Validati
   styleUrl: './forms.component.scss'
 })
 export class FormsComponent {
+  constructor(private _fb: FormBuilder) {}
+
+  public get skills(): FormArray {
+    return this.fbForm.get('skills') as FormArray;
+  }
+
   public myForm = new FormGroup({
     login: new FormControl('' , Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -33,8 +39,13 @@ export class FormsComponent {
     password_one: new FormControl(''),
     password_two: new FormControl(''),
   },
-  conformPassword
+    conformPassword
   )
+
+  public fbForm = this._fb.group({
+    name: ['Valid'],
+    skills: this._fb.array([])
+  })
 
   handlerValue() {
     if(this.myForm.valid) {
@@ -43,5 +54,24 @@ export class FormsComponent {
       alert('this form invalid');
     }
     console.log(this.myForm.get(['login'])?.value);
+  }
+
+  public newSkill(): FormGroup {
+    return this._fb.group({
+      skill: '',
+      expirience: ''
+    })
+  }
+
+  public addSkill(): void {
+    this.skills.push(this.newSkill());
+  }
+
+  public removeSkill(i: number) {
+    this.skills.removeAt(i);
+  }
+
+  public onSubmit() {
+    console.log(this.fbForm.value);
   }
 }

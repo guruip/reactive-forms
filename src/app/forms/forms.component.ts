@@ -1,11 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 export function checkRegExp(regExp: RegExp): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const forbidden = regExp.test(control.value);
     return !forbidden ? {forbiddenValue: {value: control.value}} : null;
   }
+}
+
+interface ItemplateForm {
+  login: string;
+  email: string;
+  password: string;
 }
 
 export const conformPassword: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -16,12 +23,21 @@ export const conformPassword: ValidatorFn = (control: AbstractControl): Validati
   selector: 'app-forms',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule,
+    FormsModule
   ],
   templateUrl: './forms.component.html',
   styleUrl: './forms.component.scss'
 })
 export class FormsComponent {
+
+  public templateForm: ItemplateForm = {
+    login: '',
+    email: '',
+    password: '',
+  }
+
   constructor(private _fb: FormBuilder) {}
 
   public get skills(): FormArray {

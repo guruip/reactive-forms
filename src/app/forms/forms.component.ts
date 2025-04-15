@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AppRateComponent, IRateOptions } from '../app-rate/app-rate.component';
 
 export function checkRegExp(regExp: RegExp): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -25,7 +26,8 @@ export const conformPassword: ValidatorFn = (control: AbstractControl): Validati
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    AppRateComponent,
   ],
   templateUrl: './forms.component.html',
   styleUrl: './forms.component.scss'
@@ -62,6 +64,15 @@ export class FormsComponent {
     name: ['Valid'],
     skills: this._fb.array([])
   })
+
+  public customForm = this._fb.group({
+    rate: [2],
+  })
+
+  public ratesOptions: IRateOptions = {
+    rates: 5,
+    text: 'Hello World'
+  }
 
   handlerValue() {
     if(this.myForm.valid) {

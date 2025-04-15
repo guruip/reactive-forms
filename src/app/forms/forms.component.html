@@ -85,3 +85,9 @@
         <input id="templatePassword" [(ngModel)]="templateForm.password" type="password">
     </div>
 </div>
+
+<div class="login-form" [formGroup]="customForm">
+    <h2>Custom Control</h2>
+
+    <app-rate formControlName="rate" [options]="ratesOptions"></app-rate>
+</div>
